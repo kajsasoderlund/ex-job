@@ -17,6 +17,7 @@ mongoose.connect(process.env.MONGO_URL)
 app.use(express.json())
 app.use(cookieParser())
 app.use(cors({ origin: 'http://localhost:5173', credentials: true })); 
+app.use('/api/journals', require('./routes/journalRoutes'));
 
 
 
@@ -28,7 +29,7 @@ app.use('/', require('./routes/authRoutes'))
 app.get('/api/affirmation', async (req, res) => {
     try {
         const response = await axios.get('https://www.affirmations.dev/');
-        res.status(200).json(response.data); // Return the data to the client
+        res.status(200).json(response.data); 
     } catch (error) {
         console.error('Error fetching affirmation:', error);
         res.status(500).json({ error: 'Failed to fetch affirmation' });

@@ -48,7 +48,7 @@ export const logoutUser = async () => {
 
 export const fetchAffirmations = async () => {
     try {
-        const response = await axios.get('http://localhost:8000/api/affirmation'); // Full URL
+        const response = await axios.get('http://localhost:8000/api/affirmation'); 
         return response.data;
     } catch (error) {
         console.error('Error fetching affirmations from server:', error);
@@ -58,3 +58,33 @@ export const fetchAffirmations = async () => {
 
 
 
+// journal
+export const fetchJournals = async () => {
+    try {
+        const response = await api.get('/api/journals');
+        return response.data;
+    } catch (error) {
+        console.error('Error fetching journals:', error);
+        throw error;
+    }
+};
+
+export const createJournal = async (content: string) => {
+    try {
+        const response = await api.post('/api/journals', { content });
+        return response.data;
+    } catch (error) {
+        console.error('Error creating journal:', error);
+        throw error;
+    }
+};
+
+export const deleteJournal = async (id: string) => {
+    try {
+        const response = await api.delete(`/api/journals/${id}`);
+        return response.data;
+    } catch (error) {
+        console.error('Error deleting journal:', error);
+        throw error;
+    }
+};
