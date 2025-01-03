@@ -1,0 +1,70 @@
+.container-title-playlist {
+  margin-top: 10vh;
+}
+
+.titles-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 2vh;
+}
+
+.title-container {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+  background-color: rgba(51, 50, 53, 0.378);
+  border-radius: 5px;
+}
+
+.title-music {
+  text-align: center;
+  font-weight: 600;
+  font-size: 25px;
+  color: rgb(181, 181, 181);
+}
+
+.spotify-row {
+  display: flex;
+  padding: 3vh;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.spotify-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 4vh;
+  background-color: rgba(51, 50, 53, 0.378);
+  border-radius: 5px;
+  flex: 1;
+  max-width: 45%;
+}
+
+.spotify {
+  width: 100%;
+}
+
+@media (max-width: 768px) {
+  .titles-row {
+    font-size: 0px;
+  }
+
+  .title-music {
+    font-size: 0px;
+  }
+  .title-container {
+    background-color: rgba(255, 255, 255, 0);
+  }
+
+  .spotify-row {
+    flex-direction: column;
+  }
+
+  .spotify-container {
+    max-width: 90%;
+  }
+}

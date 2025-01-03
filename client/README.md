@@ -1,50 +1,43 @@
-# React + TypeScript + Vite
+# Meditation App
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A web application for guided meditation with Spotify and YouTube integrations. Built with React, Node.js, Express, and MongoDB Atlas.
 
-Currently, two official plugins are available:
+## Features
+- User authentication (login/logout)
+- Personalized morning/evening meditation playlists
+- Integration with Spotify and YouTube
+- Journal for tracking daily meditation practices
+- content that changes based on if the user is logged in during morning/evening
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Technologies Used
+- Frontend: React, React Router, SCSS
+- Backend: Node.js, Express.js
+- Database: MongoDB Atlas
 
-## Expanding the ESLint configuration
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+## Prerequisites
+- Node.js (v16 or above)
+- MongoDB Atlas account and connection string
+- Spotify Developer Account (optional, for API keys)
 
-- Configure the top-level `parserOptions` property like this:
+## Installation
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/username/meditation-app.git
+   cd meditation-app
+   npm install
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+## in .env make sure to add mongodb setup
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+MONGO_URL=mongodb+srv://<username>:<password>@cluster0.mongodb.net/<dbname>?retryWrites=true&w=majority
+JWT_SECRET=your-secret-key
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
+Link to setup: [mongoDB atlas setup](https://www.freecodecamp.org/news/get-started-with-mongodb-atlas/)
 
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
+For server side: npm start
+Client: npm run dev
+
+
+
+
+

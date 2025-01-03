@@ -6,6 +6,7 @@ const api = axios.create({
 });
 
 
+//login and registration
 export const registerUser = async (name: string, email: string, password: string) => {
     try {
         const response = await api.post('/register', { name, email, password });
@@ -46,6 +47,7 @@ export const logoutUser = async () => {
     }
 };
 
+//Affirmation api 
 export const fetchAffirmations = async () => {
     try {
         const response = await axios.get('http://localhost:8000/api/affirmation'); 

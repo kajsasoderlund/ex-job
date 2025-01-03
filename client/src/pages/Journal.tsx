@@ -2,23 +2,34 @@
 import React, { useEffect, useState } from 'react';
 import { fetchJournals, createJournal, deleteJournal } from '../services/response';
 import { Journal } from '../interfaces/User';
-import '../styles/journal.css';
+import '../styles/journal.scss';
 import { Link, useNavigate } from 'react-router-dom';
 import { useUserContext } from '../../context/userContext';
 
-const JournalPage: React.FC = () => {
+const JournalPage = () => {
     const [journals, setJournals] = useState<Journal[]>([]);
     const [newEntries, setNewEntries] = useState<string[]>(['', '', '', '', '']);
     const [modalContent, setModalContent] = useState<{ content: string; index: number } | null>(null);
-    const { user, logout } = useUserContext();
+    const { user, logout, timeOfDay } = useUserContext();
     const navigate = useNavigate();
 
-    const prompts = [
+
+    const morningPrompts = [
         "What's on your mind today?",
         "What do you want to achieve today?",
         "What are four things you feel lucky for?",
         "What do you wanna do today to be the best version of yourself?",
     ];
+
+    const eveningPrompts = [
+        "What went well today?",
+        "What challenges did you face and how did you overcome them?",
+        "What are three things you're grateful for today?",
+        "What will you do tomorrow to improve or grow?",
+    ];
+
+
+    const prompts = timeOfDay === 'morning' ? morningPrompts : eveningPrompts;
 
     const loadJournals = async () => {
         try {
@@ -54,7 +65,7 @@ const JournalPage: React.FC = () => {
         } catch (err) {
             console.error('Failed to create journal entry');
         }
-        setModalContent(null); 
+        setModalContent(null);
     };
 
     const handleDeleteJournal = async (id: string) => {
@@ -64,7 +75,7 @@ const JournalPage: React.FC = () => {
         } catch (err) {
             console.error('Failed to delete journal entry');
         }
-        setModalContent(null); 
+        setModalContent(null);
     };
 
     const openModal = (content: string, index: number) => {
@@ -83,14 +94,17 @@ const JournalPage: React.FC = () => {
         <>
             <nav className="dashboard-top-nav">
                 <Link to="/Meditation" className="nav-link">Meditation</Link>
-                <Link to="/Dashboard" className="nav-link">Dashboard</Link>
+                <Link to="/Music" className="nav-link">Music/Podcast</Link>
+                <Link to="/Dashboard" className="nav-link">Home</Link>
                 <button onClick={handleLogout} className="nav-button">Logout</button>
             </nav>
 
-            <h1 className="h1-journal">How do you feel today?</h1>
+            <h1 className="h1-journal">
+                {timeOfDay === 'morning' ? "Good Morning! How do you feel today?" : "Good evening!  How was your day today?"}
+            </h1>
 
             <div className="journal-container">
-              
+
                 {prompts.map((prompt, index) => (
                     <div key={index} className="journal-entry">
                         <div className="journal-title" onClick={() => openModal(newEntries[index], index)}>
@@ -100,7 +114,7 @@ const JournalPage: React.FC = () => {
                     </div>
                 ))}
 
-           
+
                 <h1 className="h1-journal">Previous journal notes</h1>
                 <div className="journal-entries">
                     {journals.map((journal, index) => (
@@ -129,17 +143,19 @@ const JournalPage: React.FC = () => {
                                     : "Edit your journal entry"
                             }
                         />
-                        <button onClick={closeModal}>Close</button>
-                        <button onClick={() => handleAddJournal(modalContent.index)}>Save</button>
+                        <div className='modal-buttons-container'>
+                            <button onClick={closeModal}>Close</button>
+                            <button onClick={() => handleAddJournal(modalContent.index)}>Save</button>
 
-                        {modalContent.index >= prompts.length && (
-                            <button
-                                onClick={() => handleDeleteJournal(journals[modalContent.index - prompts.length]._id)}
-                                className="delete-button"
-                            >
-                                Delete
-                            </button>
-                        )}
+                            {modalContent.index >= prompts.length && (
+                                <button
+                                    onClick={() => handleDeleteJournal(journals[modalContent.index - prompts.length]._id)}
+                                    className="delete-button"
+                                >
+                                    Delete
+                                </button>
+                            )}
+                        </div>
                     </div>
                 </div>
             )}

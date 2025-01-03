@@ -11,7 +11,10 @@ interface UserContextType {
     setUser: React.Dispatch<React.SetStateAction<User | null>>;
     logout: () => void;
     loading: boolean;
+    //Property timeOfDay will hold either morning or evening type
+    timeOfDay: 'morning' | 'evening';
 }
+
 
 
 export const UserContext = createContext<UserContextType | undefined>(undefined);
@@ -23,7 +26,20 @@ interface UserContextProviderProps {
 export function UserContextProvider({ children }: UserContextProviderProps) {
     const [user, setUser] = useState<User | null>(null);
     const [loading, setLoading] = useState<boolean>(true);
+    //timeOfday state, setTimeOfDay function updates timeOfDay state, will hold morning or evening type 
+    const [timeOfDay, setTimeOfDay] = useState<'morning' | 'evening'>('morning');
     const navigate = useNavigate();
+
+    useEffect(() => {
+        //gets currenthour ( with date, gethours returns hours)
+        const currentHour = new Date().getHours();
+        //after 16 before 05 = evening. else will be morning
+        if (currentHour >= 16 || currentHour < 5) {
+            setTimeOfDay('evening');
+        } else {
+            setTimeOfDay('morning');
+        }
+    }, []);
 
   
     const logout = async () => {
@@ -50,7 +66,7 @@ export function UserContextProvider({ children }: UserContextProviderProps) {
     }, []);
 
     return (
-        <UserContext.Provider value={{ user, setUser, logout, loading }}>
+        <UserContext.Provider value={{ user, setUser, logout, loading, timeOfDay }}>
             {children}
         </UserContext.Provider>
     );
